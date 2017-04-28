@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>轮播图</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+	</head>
+	<body>
+		<div id="banner">
+			<div class="pic">
+				<img class="first" src="img/1.jpg" />
+				<img src="img/2.jpg" />
+				<img src="img/3.jpg" />
+				<img src="img/4.jpg" />
+				<img src="img/5.jpg" />
+				<img src="img/6.jpg" />
+				<img src="img/7.jpg" />
+				<img src="img/8.jpg" />
+			</div>
+			<div class="but">
+				<a class="but-first" href="javascript:"></a>
+				<a href="javascript:"></a>
+				<a href="javascript:"></a>
+				<a href="javascript:"></a>
+				<a href="javascript:"></a>
+				<a href="javascript:"></a>
+				<a href="javascript:"></a>
+				<a href="javascript:"></a>
+			</div>
+			<div class="prev on"></div>
+			<div class="next on"></div>
+		</div>
+		<script src="js/jquery-2.1.4.js"></script>
+		<script type="text/javascript">
+			var n=0;
+			var d=0;
+			$("#banner .but a").click(function(){
+				n=$(this).index();
+				$("#banner .but a").eq(n).addClass("but-first").siblings().removeClass("but-first");
+				auto();
+			})
+			function auto(){
+				if(n>d){
+				$("#banner .pic img").eq(n).css({"left":"100%"}).animate({left:0},500);
+				$("#banner .pic img").eq(d).animate({left:"-100%"},500)
+				d=n;
+				}
+				if(n<d){
+					$("#banner .pic img").eq(n).css({"left":"-100%"}).animate({left:0},500);
+				$("#banner .pic img").eq(d).animate({left:"100%"},500)
+				d=n;
+				}
+			}
+			var timer=setInterval(play,2000);
+			function play(){
+				n++
+				if(n>7){
+					n=0;
+				}
+				$("#banner .but a").eq(n).addClass("but-first").siblings().removeClass("but-first");
+				auto();
+			}
+			$("#banner").hover(function(){
+				clearInterval(timer);
+				$(".on").fadeIn("slow");
+			},function(){
+				timer=setInterval(play,2000);
+				$(".on").fadeOut("slow");
+			})
+			$(".prev").click(function(){
+				n--;
+				if(n<0){
+					n=7;
+				}
+				$("#banner .but a").eq(n).addClass("but-first").siblings().removeClass("but-first");
+				auto();
+			})
+			$(".next").click(function(){
+				n++;
+				if(n>7){
+					n=0;
+				}
+				$("#banner .but a").eq(n).addClass("but-first").siblings().removeClass("but-first");
+				auto();
+			})
+		</script>
+	</body>
+</html>
